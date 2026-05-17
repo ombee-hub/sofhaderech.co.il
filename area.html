@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>הסביבה · סוף הדרך</title>
+  <meta name="description" content="מה לעשות מסביב לסוף הדרך — טיולים, מסעדות, יקבים ומעיינות בגליל העליון.">
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="apple-touch-icon" href="images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .activity-card {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      transition: all 0.4s var(--transition);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+    }
+    .activity-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-strong);
+    }
+    .activity-image {
+      aspect-ratio: 16/10;
+      overflow: hidden;
+      position: relative;
+    }
+    .activity-image img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.8s var(--transition);
+    }
+    .activity-card:hover .activity-image img { transform: scale(1.08); }
+    .activity-distance {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      background: rgba(26,26,26,0.7);
+      color: white;
+      backdrop-filter: blur(10px);
+      padding: 0.4rem 0.9rem;
+      border-radius: 100px;
+      font-size: 0.8rem;
+    }
+    .activity-body {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .activity-cat {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ember);
+      margin-bottom: 0.5rem;
+    }
+    .activity-body h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      color: var(--olive-deep);
+    }
+    .activity-body p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      flex: 1;
+    }
+    .map-block {
+      aspect-ratio: 16/9;
+      border-radius: 24px;
+      overflow: hidden;
+      background: var(--olive-deep);
+      position: relative;
+    }
+    .map-block iframe { width: 100%; height: 100%; border: 0; }
+    .timeline {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      padding: 0 1rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      right: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--ember), var(--cream-warm));
+    }
+    .timeline-item {
+      width: 50%;
+      padding: 1.5rem 2rem;
+      position: relative;
+    }
+    .timeline-item:nth-child(odd) {
+      margin-right: 50%;
+      text-align: left;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: var(--ember);
+      border-radius: 50%;
+      top: 1.75rem;
+      border: 3px solid var(--off-white);
+    }
+    .timeline-item:nth-child(odd)::before { left: -8px; }
+    .timeline-item:nth-child(even)::before { right: -8px; }
+    .timeline-time {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--ember);
+      font-weight: 700;
+    }
+    .timeline-item h4 {
+      font-size: 1.2rem;
+      margin: 0.25rem 0 0.5rem;
+      color: var(--olive-deep);
+    }
+    .timeline-item p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    @media (max-width: 700px) {
+      .timeline::before { right: 20px; }
+      .timeline-item { width: 100%; padding-right: 50px; padding-left: 0; text-align: right !important; margin: 0 !important; }
+      .timeline-item::before { right: 12px !important; left: auto !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header dark-bg">
+    <div class="nav-wrap">
+      <a href="index.html" class="logo">
+        <img src="images/logo-all.png" alt="סוף הדרך · בקתות במושב מתת" class="logo-img">
+      </a>
+      <button class="menu-toggle" aria-label="פתח תפריט"><span></span><span></span><span></span></button>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="about.html">הסיפור</a></li>
+          <li><a href="rooms.html">הצימרים</a></li>
+          <li><a href="gallery.html">גלריה</a></li>
+          <li><a href="area.html">הסביבה</a></li>
+        </ul>
+      </nav>
+      <a href="contact.html" class="nav-cta"><span>יצירת קשר</span><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transform: scaleX(-1);"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></span></a>
+    </div>
+  </header>
+
+  <aside class="mobile-menu" aria-hidden="true">
+    <nav class="menu-nav">
+      <a href="about.html"><span class="menu-num">01</span><span>הסיפור</span></a>
+      <a href="rooms.html"><span class="menu-num">02</span><span>הצימרים</span></a>
+      <a href="gallery.html"><span class="menu-num">03</span><span>גלריה</span></a>
+      <a href="area.html"><span class="menu-num">04</span><span>הסביבה</span></a>
+    </nav>
+    <a href="contact.html" class="menu-cta">
+      <span>יצירת קשר</span>
+      <span class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transform: scaleX(-1);"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></span>
+    </a>
+    <div class="menu-contact">
+      <div class="menu-contact-label">לתיאום והזמנות</div>
+      <a href="tel:+972523575072" class="menu-contact-item">
+        <span class="ic">📞</span>
+        <span>052-357-5072</span>
+      </a>
+      <a href="https://wa.me/972523575072" class="menu-contact-item">
+        <span class="ic">💬</span>
+        <span>שלחו וואטסאפ</span>
+      </a>
+      <a href="mailto:droreyal@zahav.net.il" class="menu-contact-item">
+        <span class="ic">✉️</span>
+        <span>droreyal@zahav.net.il</span>
+      </a>
+    </div>
+  </aside>
+  <div class="menu-backdrop"></div>
+
+  <!-- ===== Page Hero ===== -->
+  <section class="hero page-hero">
+    <div class="hero-bg">
+      <img src="images/balkon_chair.jpg" alt="קשת בענן מעל הגליל">
+    </div>
+    <div class="container hero-content">
+      <span class="hero-eyebrow">הסביבה</span>
+      <h1>כל הצפון,<br><span class="accent">חצי שעה משם.</span></h1>
+    </div>
+  </section>
+
+  <!-- ===== Map Intro ===== -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-eyebrow">איפה אנחנו</span>
+        <h2 class="section-title">מצפה מתת,<br>חצור הגלילית.</h2>
+        <p class="section-subtitle">בדיוק במרחק שבו רואים את הכינרת, אבל לא שומעים את העיר. נקודת מוצא מושלמת לכל הצפון.</p>
+      </div>
+
+      <div class="map-block reveal">
+        <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=35.50%2C32.95%2C35.75%2C33.10&layer=mapnik&marker=33.025%2C35.625" loading="lazy"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Activities ===== -->
+  <section class="section section-cream">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-eyebrow">מה כדאי לעשות</span>
+        <h2 class="section-title">המלצות אישיות</h2>
+        <p class="section-subtitle">מקומות שאנחנו אוהבים, לא מקומות ש"חייבים" לראות. מקווים שתאהבו גם.</p>
+      </div>
+
+      <div class="card-grid">
+        <div class="activity-card reveal">
+          <div class="activity-image">
+            <img src="https://images.unsplash.com/photo-1583416750470-965b2707b355?w=800&q=80&auto=format&fit=crop" alt="נחל עיון">
+            <span class="activity-distance">25 דק' נסיעה</span>
+          </div>
+          <div class="activity-body">
+            <span class="activity-cat">טיול</span>
+            <h3>שמורת נחל עיון</h3>
+            <p>מסלול קצר, מפלים שלא מפסיקים גם בקיץ, וצל של עצים גבוהים. הכי טוב בבוקר.</p>
+          </div>
+        </div>
+
+        <div class="activity-card reveal">
+          <div class="activity-image">
+            <img src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=800&q=80&auto=format&fit=crop" alt="יקב">
+            <span class="activity-distance">15 דק' נסיעה</span>
+          </div>
+          <div class="activity-body">
+            <span class="activity-cat">טעימות</span>
+            <h3>יקב דלתון</h3>
+            <p>טעימת יין מסודרת עם נוף לכרם. תזמינו מראש, ובקשו את הרזרבה.</p>
+          </div>
+        </div>
+
+        <div class="activity-card reveal">
+          <div class="activity-image">
+            <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=800&q=80&auto=format&fit=crop" alt="עין זיו">
+            <span class="activity-distance">10 דק' נסיעה</span>
+          </div>
+          <div class="activity-body">
+            <span class="activity-cat">מעיין</span>
+            <h3>עין זיו</h3>
+            <p>מעיין מוסתר עם בריכה טבעית קרירה. סוד שמורי הגליל. בדרך כלל שקט.</p>
+          </div>
+        </div>
+
+        <div class="activity-card reveal">
+          <div class="activity-image">
+            <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80&auto=format&fit=crop" alt="מסעדה">
+            <span class="activity-distance">8 דק' נסיעה</span>
+          </div>
+          <div class="activity-body">
+            <span class="activity-cat">מסעדה</span>
+            <h3>פוקה בכפר</h3>
+            <p>אוכל עונתי במסעדת השף של אורן. בקשו את "תפריט המארח" — לא בתפריט הרגיל.</p>
+          </div>
+        </div>
+
+        <div class="activity-card reveal">
+          <div class="activity-image">
+            <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80&auto=format&fit=crop" alt="הר מירון">
+            <span class="activity-distance">30 דק' נסיעה</span>
+          </div>
+          <div class="activity-body">
+            <span class="activity-cat">טיול</span>
+            <h3>הר מירון</h3>
+            <p>נקודת תצפית מהיפות בארץ. מסלול הליכה מתון, מתאים לכל הרמות.</p>
+          </div>
+        </div>
+
+        <div class="activity-card reveal">
+          <div class="activity-image">
+            <img src="https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?w=800&q=80&auto=format&fit=crop" alt="צפת">
+            <span class="activity-distance">20 דק' נסיעה</span>
+          </div>
+          <div class="activity-body">
+            <span class="activity-cat">עיר</span>
+            <h3>העיר העתיקה של צפת</h3>
+            <p>סמטאות, גלריות, ובתי כנסת מהמאה ה-16. אל תפספסו את חנות הגבינות של דליה.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== A perfect day ===== -->
+  <section class="section section-dark">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-eyebrow">יום מושלם</span>
+        <h2 class="section-title">איך נראה<br>יום בסוף הדרך?</h2>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item reveal">
+          <div class="timeline-time">07:30</div>
+          <h4 style="color: var(--cream-light);">בוקר על הדק</h4>
+          <p style="color: rgba(245,241,232,0.6);">קפה טרי, חלון פתוח, ערפילי בוקר מעל העמק.</p>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="timeline-time">10:00</div>
+          <h4 style="color: var(--cream-light);">טיול קצר</h4>
+          <p style="color: rgba(245,241,232,0.6);">10 דקות נסיעה לעין זיו, שעתיים של שקט.</p>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="timeline-time">13:00</div>
+          <h4 style="color: var(--cream-light);">צהריים מקומיים</h4>
+          <p style="color: rgba(245,241,232,0.6);">מסעדת שף קטנה במרחק של 8 דקות.</p>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="timeline-time">16:00</div>
+          <h4 style="color: var(--cream-light);">יקב + שקיעה</h4>
+          <p style="color: rgba(245,241,232,0.6);">טעימת יין ביקב דלתון, בדיוק בזמן לשקיעה.</p>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="timeline-time">19:30</div>
+          <h4 style="color: var(--cream-light);">חזרה הביתה</h4>
+          <p style="color: rgba(245,241,232,0.6);">ג'קוזי, יין מקומי, אח דולק.</p>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="timeline-time">22:00</div>
+          <h4 style="color: var(--cream-light);">כוכבים</h4>
+          <p style="color: rgba(245,241,232,0.6);">פתוח. שקט. תופתעו כמה מהם רואים מפה.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="section">
+    <div class="container">
+      <div class="testimonial reveal">
+        <h2 class="section-title">רוצים מסלול מותאם?</h2>
+        <p class="section-subtitle">נשמח לבנות לכם תכנון יומי לפי תאריכים, מזג אוויר וסגנון.</p>
+        <div style="margin-top: var(--space-md);">
+          <a href="contact.html" class="btn btn-primary">דברו איתנו</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <span class="footer-label">מפת האתר</span>
+      </div>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h2>סוף הדרך</h2>
+          <p>בקתת בוטיק אחת, במצפה מתת שבגליל העליון. שקט, נוף, וזמן לעצמכם.</p>
+        </div>
+        <div class="footer-col">
+          <h4>ניווט</h4>
+          <ul>
+            <li><a href="about.html">הסיפור</a></li>
+            <li><a href="rooms.html">הצימרים</a></li>
+            <li><a href="gallery.html">גלריה</a></li>
+            <li><a href="area.html">הסביבה</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>יצירת קשר</h4>
+          <ul>
+            <li><a href="tel:+972523575072">052-357-5072</a></li>
+            <li><a href="mailto:droreyal@zahav.net.il">droreyal@zahav.net.il</a></li>
+            <li>מצפה מתת, חצור הגלילית</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-policy">
+        <a href="privacy.html">מדיניות פרטיות</a>
+        <span class="sep">·</span>
+        <a href="accessibility.html">הצהרת נגישות</a>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 סוף הדרך · כל הזכויות שמורות</span>
+        <span>עוצב באהבה בגליל העליון</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Accessibility widget -->
+  <button class="a11y-toggle" id="a11y-toggle" aria-label="הגדרות נגישות">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM21 9h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"/></svg>
+  </button>
+  <aside class="a11y-panel" id="a11y-panel" role="dialog" aria-label="הגדרות נגישות">
+    <div class="a11y-header">
+      <h3>הגדרות נגישות</h3>
+      <button class="a11y-close" id="a11y-close" aria-label="סגור">✕</button>
+    </div>
+    <div class="a11y-body">
+      <div class="a11y-grid">
+        <button class="a11y-btn" data-class="a11y-large-text"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg><span>טקסט גדול</span></button>
+        <button class="a11y-btn" data-class="a11y-high-contrast"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10zm0-18v16c-4.4 0-8-3.6-8-8s3.6-8 8-8z"/></svg><span>ניגודיות</span></button>
+        <button class="a11y-btn" data-class="a11y-no-motion"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg><span>ביטול הנפשות</span></button>
+        <button class="a11y-btn" data-class="a11y-highlight-links"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07L11.76 5.17"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span>הדגשת קישורים</span></button>
+        <button class="a11y-btn" data-class="a11y-readable"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h12"/></svg><span>גופן קריא</span></button>
+        <button class="a11y-btn" data-class="a11y-grayscale"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg><span>גווני אפור</span></button>
+      </div>
+      <button class="a11y-reset" id="a11y-reset">↺ איפוס הגדרות</button>
+      <div class="a11y-links">
+        <a href="accessibility.html">📋 הצהרת נגישות</a>
+        <a href="privacy.html">🔒 מדיניות פרטיות</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Cookie banner -->
+  <div class="cookie-banner" id="cookie-banner">
+    <div class="cb-icon">🍪</div>
+    <div class="cb-text">
+      <strong>אנחנו משתמשים בעוגיות</strong>
+      האתר משתמש בעוגיות לשיפור חוויית הגלישה ולשמירת הגדרות הנגישות שלכם. <a href="privacy.html">קראו במדיניות הפרטיות</a>.
+    </div>
+    <div class="cb-actions">
+      <button class="cb-decline">דחייה</button>
+      <button class="primary cb-accept">אישור</button>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
