@@ -46,6 +46,17 @@ document.addEventListener('DOMContentLoaded', () => {
     a.addEventListener('click', closeMenu)
   );
 
+  // Auto-close drawer when window resizes to desktop width
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (window.innerWidth > 1024 && isOpen()) {
+        closeMenu();
+      }
+    }, 120);
+  });
+
   // ----- Reveal on scroll -----
   const observer = new IntersectionObserver(
     (entries) => {
@@ -112,17 +123,27 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('a11y-settings', JSON.stringify(active));
   };
 
+  const syncA11yToggleState = () => {
+    const isOpen = a11yPanel?.classList.contains('open');
+    a11yToggle?.classList.toggle('is-active', !!isOpen);
+  };
+
   a11yToggle?.addEventListener('click', (e) => {
     e.stopPropagation();
     a11yPanel?.classList.toggle('open');
+    syncA11yToggleState();
   });
-  a11yClose?.addEventListener('click', () => a11yPanel?.classList.remove('open'));
+  a11yClose?.addEventListener('click', () => {
+    a11yPanel?.classList.remove('open');
+    syncA11yToggleState();
+  });
   document.addEventListener('click', (e) => {
     if (a11yPanel?.classList.contains('open') &&
         !a11yPanel.contains(e.target) &&
         e.target !== a11yToggle &&
         !a11yToggle?.contains(e.target)) {
       a11yPanel.classList.remove('open');
+      syncA11yToggleState();
     }
   });
 
